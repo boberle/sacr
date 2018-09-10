@@ -276,6 +276,36 @@ all the chains and the elements:
 \label{fig:popup-at-a-glance}
 \end{figure}
 
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~             {{{1
+ \subsection{What if the popup is blocked by Firefox}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Popups were often used in the 2000s to show ads.  Now they are blocked by
+almost all browsers.  If, when you press \verb|p|, you get a message saying
+that SACR can't create the popup, you must allow firefox to show it.
+
+\begin{itemize}
+   \item Go to the \emph{Preferences} panel of Firefox,
+   \item click on \emph{Privacy \& Security}
+   \item and scroll down to the \emph{Permissions} section.
+\end{itemize}
+
+For your safety, the checkbox \emph{Block pop-up windows} should be checked.
+
+\begin{itemize}
+   \item Click on the \emph{Exceptions buttons...} button,
+   \item enter \verb|http://boberle.com| (and also \verb|https://boberle.com|
+   for when I switch to \verb|https|),
+   \item click on \emph{Allow},
+   \item and click on \emph{Save changes}.
+\end{itemize}
+
+Now the \verb|p| key should show the popup.
+
+You can follow the video at this address:
+\url{http://boberle.com/projects/sacr/videos/10_allow_popup_in_firefox_exported.mp4}.
+It's in French, but just follow mouse cursor, I use an English version of
+Firefox.
 
 
 %================================                                   {{{1
@@ -780,10 +810,10 @@ Press \verb|u| to hide all sets that are not chains.
 TODO
 
 
-%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                                   {{{1
- \subsection{Command reference and all other commands that aren't listed
+%======================================================================{{{1
+ \section{Command reference and all other commands that aren't listed
  elsewhere in this guide}
-%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%======================================================================
 
 Type \emph{h} to show the main available commands (see figure~\ref{fig:help}).
 
