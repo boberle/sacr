@@ -1,0 +1,320 @@
+<!DOCTYPE HTML>
+
+<!--
+
+SACR (Script d'Annotation de Chaînes de Référence): a coreference chain
+annotation tool.
+
+Copyright 2017 Bruno Oberle.
+
+This Source Code Form is subject to the terms of the Mozilla Public License,
+v. 2.0. If a copy of the MPL was not distributed with this file, You can
+obtain one at http://mozilla.org/MPL/2.0/.
+
+This program comes with ABSOLUTELY NO WARRANTY.  See the Mozilla Public
+License, v. 2.0 for more details.
+
+Some questions about the license may have been answered at
+https://www.mozilla.org/en-US/MPL/2.0/FAQ/.
+
+If you have any question, contact me at boberle.com.
+
+The source code can be found at boberle.com.
+
+-->
+
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title>Script d'Annotation des Chaînes de Référence</title>
+   <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1 id="title">SACR</h1>
+
+<div id="divWhiteSpaceAtTheEnd"></div>
+
+<div id="divLinkPropertyAnchor"></div>
+
+
+<!-- CONSTANTS AND GLOBAL VARIABLES-->
+
+<script type="text/javascript">
+
+   const VERSION = "5.1.0";
+   document.getElementById('title').innerHTML = "Coreference Chain Annotation Tool " +
+      VERSION + " (<a href=\"user_guide.pdf\" target=\"_blank\">help</a>)";
+
+   const CLASS_PARAGRAPH = 'paragraph';
+   const CLASS_TOKEN = 'token';
+   const CLASS_COMMENT = 'comment';
+   const CLASS_HEADING = 'heading';
+   const CLASS_LINK = 'link';
+   const CLASS_METADATA = 'metadata';
+   const CLASS_PAR_NUMBER = 'parNumber';
+   const CLASS_SELECTED = 'selected';
+   const CLASS_HIDDEN = 'hidden';
+   const CHAIN_POPUP_MAIN_DIV_ID = 'divChainPopup';
+   const CLASS_CHAIN_POPUP_LINK_NAME = 'chainPopupLinkName';
+   const CLASS_CHAIN_POPUP_CHAIN_NAME = 'chainPopupChainName';
+   const CLASS_CHAIN_POPUP_CHAIN_DIV = 'chainPopupChainDiv';
+   const CLASS_CHAIN_POPUP_LINK_DIV = 'chainPopupLinkDiv';
+
+</script>
+
+
+
+<!-- OBJECTS PROTOTYPES -->
+
+<script type="text/javascript" src="js/cls_common.js"></script>
+<script type="text/javascript" src="js/cls_sacr_parser.js"></script>
+<script type="text/javascript" src="js/cls_property.js"></script>
+<script type="text/javascript" src="js/cls_modal_div.js"></script>
+<script type="text/javascript" src="js/cls_data_loader.js"></script>
+<script type="text/javascript" src="js/cls_text.js"></script>
+<script type="text/javascript" src="js/cls_link.js"></script>
+<script type="text/javascript" src="js/cls_chain.js"></script>
+<script type="text/javascript" src="js/cls_colors.js"></script>
+<script type="text/javascript" src="js/cls_scrolling.js"></script>
+<script type="text/javascript" src="js/cls_chain_popup.js"></script>
+<script type="text/javascript" src="js/cls_exporter.js"></script>
+
+<!-- FUNCTIONS TO BE EXECUTED AT LOADING TIME -->
+
+<script type="text/javascript">
+
+   window.onbeforeunload = function(e) {
+      return "Make sure you have exported your annotations!  All your modification in the browser will otherwise be lost!";
+   }
+
+   // START HERE
+
+   var gDivLinkPropertyAnchor =
+      document.getElementById('divLinkPropertyAnchor');
+
+   //console.log(location.search);
+   var gLoadingTime = true;
+   var gText;
+   if (location.search == "?withannotations") {
+      gText = new Text("withAnnotations");
+      gText.clickOnTheParseButton();
+   } else if (location.search == "?withoutannotations") {
+      gText = new Text("withoutAnnotations");
+      gText.clickOnTheParseButton();
+   } else {
+      gText = new Text();
+   }
+
+</script>
+
+<script>
+   var gKeyDownHandler = function (e) {
+
+      var tagName = document.activeElement.tagName;
+
+      //console.log(tagName);
+      //console.log(e.keyCode);
+
+      if (tagName != 'BODY') {
+         return;
+      }
+
+      if (e.keyCode == 46 || e.keyCode == 8) { // suppr
+         gText.destroySelectedLink();
+      } else if (e.keyCode == 67) { // c
+         gText.changeColorOfSelectedChain();
+      } else if (e.keyCode == 66) { // b = backward in text
+         if (e.ctrlKey) {
+            return;
+         }
+         if (e.shiftKey) {
+            gText.selectNextLinkInText(true, true);
+         } else {
+            gText.selectNextLinkInText(true, false);
+         }
+      } else if (e.keyCode == 70) { // f = forward in text
+         if (e.ctrlKey) {
+            return;
+         }
+         if (e.shiftKey) {
+            gText.selectNextLinkInText(false, true);
+         } else {
+            gText.selectNextLinkInText(false, false);
+         }
+      } else if (e.keyCode == 74) { // j = forward in chain
+         if (e.ctrlKey) {
+            return;
+         }
+         if (e.shiftKey) {
+            gText.selectNextLinkInChain(false, true);
+         } else {
+            gText.selectNextLinkInChain(false, false);
+         }
+      } else if (e.keyCode == 75) { // k = backward in chain
+         if (e.ctrlKey) {
+            return;
+         }
+         if (e.shiftKey) {
+            gText.selectNextLinkInChain(true, true);
+         } else {
+            gText.selectNextLinkInChain(true, false);
+         }
+      } else if (e.keyCode == 78) { // n = change name
+         // don't use ctrl+shift (open new window)
+         if (e.shiftKey) { // don't ask
+            gText.changeNameOfSelectedChain(false);
+         } else { // ask the user (default = current name)
+            gText.changeNameOfSelectedChain(true, true);
+         }
+      } else if (e.keyCode == 77) { // m = change name
+            // ask the user (default = words)
+            gText.changeNameOfSelectedChain(true, false);
+      } else if (e.keyCode == 79) { // o = only this chain
+         if (e.shiftKey) { // show all
+            gText.showAllChains();
+         } else { // show only the selected chain
+            gText.showOnlySelectedChain();
+         }
+      } else if (e.keyCode == 84) { // t = scroll to
+         if (e.shiftKey) { // in the popup
+            gText.scrollToSelectedLink(true);
+         } else {
+            gText.scrollToSelectedLink();
+         }
+      } else if (e.keyCode == 80) { // p = chain popup
+         if (e.shiftKey) {
+            gText.chainColl.showChainPatters(true);
+         } else {
+            gText.chainPopup.show();
+         }
+      } else if (e.keyCode == 81) { // q
+         //gText.clickOnTheParseButton();
+      } else if (e.keyCode == 69) { // e = expand/collapse all
+         if (e.shiftKey) {
+            gText.chainColl.collapseAllChainsInPopup();
+         } else {
+            gText.chainColl.expandAllChainsInPopup();
+         }
+      } else if (e.keyCode == 87) { // w = export
+         if (e.shiftKey) {
+            new Exporter().exportText(true);
+         } else {
+            new Exporter().exportText();
+         }
+      } else if (e.keyCode == 88) { // x = export schema
+         if (e.shiftKey) {
+            new Exporter().showSchema();
+         } else {
+            new Exporter().exportSchema();
+         }
+      } else if (e.keyCode == 83) { // s = search
+         gText.search();
+      } else if (e.keyCode == 85) { // u = hide non true chains
+         if (e.shiftKey) {
+            gText.chainColl.toggleNonTrueChainsDisplayInPopup(); // in popup
+         } else {
+            gText.hideNonTrueChains(); // in main window
+         }
+      } else if (e.keyCode == 86) { // v = expand only true chains in popup
+         if (e.shiftKey) {
+            // free
+         } else {
+            gText.chainColl.expandTrueChainsInPopup();
+         }
+      } else if (e.keyCode == 73) { // i = increase font
+         if (e.shiftKey) {
+            gText.changeFontSize(false);
+         } else {
+            gText.changeFontSize(true);
+         }
+      } else if (e.keyCode == 76) { // l = statistics
+         if (e.shiftKey) {
+            // free
+         } else {
+            gText.showStatistics();
+         }
+
+      } else if (e.keyCode == 72) { // h = help
+         var help = "";
+         help += "Create links by clicking on tokens:\n";
+         help += "- to create a link with one token: double click on that token\n";
+         help += "- to create a link with more than one token: click on the first and last token\n";
+         help += "- by default, a default name will be used\n";
+         help += "   - hold shift to be asked for a name\n";
+         help += "   - hold ctrl to automatically attach the link to the last selected chain\n";
+         help += "\n";
+         help += "Create chain with drag and drop:\n";
+         help += "- source is singleton, target is singleton:\n";
+         help += "   - target will be attached to source chain\n";
+         help += "- source is singleton and target is not singleton:\n";
+         help += "   - source will be attached to target chain\n";
+         help += "   - hold ctrl for the reverse";
+         help += "- source is not singleton and target is singleton:\n";
+         help += "   - target will be attached to source chain\n";
+         help += "- source is not singleton and target is not singleton:\n";
+         help += "   - the chains will be merged (you will be asked to confirm)\n";
+         help += "   - hold ctrl to detach the target from its chain and attach it to the source chain";
+         help += "Note that d&d is valid in the main window and in the popup, but also between them.\n";
+         help += "\n";
+         help += "Replace a link:\n";
+         help += "- To replace a link, create a new link, then drag-and-drop, holding shift (ctrl+shift for Firefox 54 and below), it to the link to be replaced.  This will copy all the metadata (chain name and properties) to the target link, and remove the source link.\n";
+         help += "\n";
+         help += "Detach a link from each chain:\n";
+         help += "- hold shift and click on a link to attach it to a new chain\n";
+         help += "- hold ctrl and click on a link to attach it to a the last selected chain\n";
+         help += "- hold ctrl and shift and click on a link to attach it to a new chain (and be asked for the name of that chain)\n";
+         help += "\n";
+         help += "Edit links:\n";
+         help += "- suppr: destroy the selected link\n";
+         help += "- c: change color of the selected chain\n";
+         help += "- n: change the name of the selected chain (ask, default set to current name)\n";
+         help += "- N: change the name of the selected chain (don't ask)\n";
+         help += "- m: change the name of the selected chain (ask, default set to content)\n";
+         help += "\n";
+         help += "Navigate:\n";
+         help += "- f: forward in text\n";
+         help += "- F: forward in text (only visible)\n";
+         help += "- j: forward in chain\n";
+         help += "- J: forward in chain (only visible)\n";
+         help += "- b: backward in text\n";
+         help += "- B: backward in text (only visible)\n";
+         help += "- k: backward in chain\n";
+         help += "- K: backward in chain (only visible)\n";
+         help += "- t: scroll to the selected link in the main window\n";
+         help += "- T: scroll to the selected link in the popup window\n";
+         help += "\n";
+         help += "Show and hide links:\n";
+         help += "- o: show only the selected chain\n";
+         help += "- O: show all links\n";
+         help += "- s: show the search box\n";
+         help += "- u: hide non true chains\n";
+         help += "- U: hide/show (toggle) non true chains in popup\n";
+         help += "\n";
+         help += "All chains and links popup:\n";
+         help += "- p: show the popup window of all chains and links\n";
+         help += "- e: expand all chains in the popup\n";
+         help += "- E: collapse all chains in the popup\n";
+         help += "- v: expand true chains in the popup\n";
+         help += "\n";
+         help += "Save the text, the annotation, and the schema:\n";
+         help += "- w: write the text and annotations to a file\n";
+         help += "- W: write the text and annotations to a file (with head ";
+         help += "text and link content)\n";
+         help += "- x: write the schema to a file\n";
+         help += "- X: show the schema (in a dialog)\n";
+         help += "\n";
+         help += "Display:\n";
+         help += "- i: increase font size\n";
+         help += "- I: decrease font size\n";
+         help += "- l: statistics\n";
+         help += "- P: show chain patterns\n";
+         alert(help);
+      }
+   };
+   document.body.addEventListener('keydown', gKeyDownHandler);
+</script>
+
+</body>
+</html>
+

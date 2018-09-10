@@ -1,0 +1,208 @@
+/*
+ *
+ * SACR (Script d'Annotation de Chaînes de Référence): a coreference chain
+ * annotation tool.
+ * 
+ * Copyright 2017 Bruno Oberlé.
+ * 
+ * This Source Code Form is subject to the terms of the Mozilla Public License,
+ * v. 2.0. If a copy of the MPL was not distributed with this file, You can
+ * obtain one at http://mozilla.org/MPL/2.0/.
+ * 
+ * This program comes with ABSOLUTELY NO WARRANTY.  See the Mozilla Public
+ * License, v. 2.0 for more details.
+ * 
+ * Some questions about the license may have been answered at
+ * https://www.mozilla.org/en-US/MPL/2.0/FAQ/.
+ * 
+ * If you have any question, contact me at boberle.com.
+ * 
+ * The source code can be found at boberle.com.
+ *
+ */
+
+
+
+/* NOTE: the 'and' selector in CSS is .class1.class2 (WITHOUT space) */
+
+/* div text */
+
+body {
+   /*background: black;*/
+}
+
+div#divText {
+   /*padding-bottom: 800px;*/
+}
+
+div#divText p {
+   font-size: 20pt;
+   /*color: antiquewhite;*/
+}
+
+div#divText p.paragraph {
+   line-height: 2.75em;
+   padding: 30px;
+   font-family: Gentium;
+}
+
+div#divText span.parNumber {
+   /* */
+}
+
+div#divText p.comment {
+   font-family: mono;
+   font-size: 15pt;
+   background-color: antiquewhite;
+   padding: 10px;
+   margin: 0px;
+}
+
+div#divText p.heading.level1 {
+   font-weight: bold;
+   font-size: 24pt;
+   margin-left: 0pt;
+}
+
+div#divText p.heading.level2 {
+   font-weight: bold;
+   font-size: 22pt;
+   margin-left: 20pt;
+}
+
+div#divText p.heading.level3 {
+   font-weight: bold;
+   font-size: 20pt;
+   margin-left: 40pt;
+}
+
+div#divText p.heading.level4 {
+   font-weight: bold;
+   font-size: 18pt;
+   margin-left: 40pt;
+}
+
+div#divText p.heading.level5 {
+   font-weight: bold;
+   font-size: 16pt;
+   margin-left: 40pt;
+}
+
+div#divText p.heading.level6 {
+   font-weight: bold;
+   font-size: 14pt;
+   margin-left: 40pt;
+}
+
+
+
+/* link */
+
+div#divText span.link {
+   border: solid 2px black;
+}
+
+/* note: must be `span.link.hidden' and not only `span.hidden' for the
+ * `padding' to work (but `span.hidden' is sufficient for `font-size' for
+ * example...).
+ */
+div#divText span.link.hidden {
+   padding-left: 7px;
+}
+
+/* don't forget the `>', otherwise all nested links of a hidden link will be
+ * hidden!
+ */
+div#divText span.hidden>span.metadata {
+   display: none;
+}
+
+div#divText span.link                    { padding: 11px; padding-left: 0px; }
+div#divText span>span.link               { padding:  8px; padding-left: 0px; }
+div#divText span>span>span.link          { padding:  5px; padding-left: 0px; }
+div#divText span>span>span>span.link     { padding:  0px; padding-left: 0px; }
+div#divText span.link>span.metadata                { padding: 11px; padding-bottom: 12px; padding-left: 0px; }
+div#divText span>span.link>span.metadata           { padding:  8px; padding-bottom:  9px; padding-left: 0px; }
+div#divText span>span>span.link>span.metadata      { padding:  5px; padding-bottom:  6px; padding-left: 0px; }
+div#divText span>span>span>span.link>span.metadata { padding:  0px; padding-bottom:  1px; padding-left: 0px; }
+div#divText span.metadata {
+   margin-right: 3px;
+   padding-right: 2px;
+   font-family: mono;
+}
+
+div#divText span.link.selected {
+   border-style: dotted;
+}
+
+/* referring expressions (token) */
+
+div#divText a.token {
+   text-decoration: none;
+   color: inherit;
+}
+
+div#divText a.token.selected {
+   text-decoration: underline;
+}
+
+div#divLinkPropertyAnchor {
+   background-color: #FEF0C9;
+   display: none;
+   position: fixed;
+   bottom: 0px;
+   left: 0px;
+   /*height: 30%;*/
+   width: 100%;
+   padding: 10px;
+   margin: 0px;
+}
+
+/* divWhiteSpaceAtTheEnd */
+
+div#divWhiteSpaceAtTheEnd {
+   /*background-color: green;*/
+}
+
+/* misc */
+
+a {
+   cursor: pointer;
+}
+
+/* chain popup */
+
+div#divChainPopup p {
+   font-family: Gentium;
+   font-size: 15pt;
+   padding: 0px;
+   margin: 0px;
+}
+
+div.chainPopupChainDiv {
+   padding: 10px;
+   margin: 10px;
+   /*border: 1px solid black;*/
+}
+
+p.chainPopupChainName {
+   font-weight: bold;
+}
+
+p.chainPopupChainName.selected a {
+   border: 2px black solid;
+}
+
+div.chainPopupLinkDiv {
+   padding: 0px;
+   margin: 0px;
+   margin-left: 30px;
+   /*border: 1px solid black;*/
+}
+
+div.chainPopupLinkDiv a.selected {
+   /*text-decoration: underline;*/
+   background: black;
+   color: white;
+}
+
