@@ -40,7 +40,22 @@ The workflow is as follows:
 
 Documentation can be found in the `user_guide.pdf` file.
 
-Some video tutorials (in French) are available at http://boberle.com/projects/sacr.
+Video tutorials (in French) are available on my [Youtube channel](https://www.youtube.com/channel/UCOwucR9MSBbuOsa1owqyM5Q), with a dedicated
+[playlist](https://www.youtube.com/watch?v=mjxR7m5fSrE&list=PLLXnGmOewaNXrAvW9xsrtNrYqUDocZ18Z):
+
+- [01: ouvrir un fichier](https://www.youtube.com/watch?v=mjxR7m5fSrE&list=PLLXnGmOewaNXrAvW9xsrtNrYqUDocZ18Z&index=1),
+- [02: annoter](https://www.youtube.com/watch?v=LDqy4x5xQl8&list=PLLXnGmOewaNXrAvW9xsrtNrYqUDocZ18Z&index=2),
+- [03: stratégies d'annotation](https://www.youtube.com/watch?v=0oslSmkb020&list=PLLXnGmOewaNXrAvW9xsrtNrYqUDocZ18Z&index=3),
+- [04: sauver les annotations](https://www.youtube.com/watch?v=dvqVGfMPP_w&list=PLLXnGmOewaNXrAvW9xsrtNrYqUDocZ18Z&index=4),
+- [05: la popup](https://www.youtube.com/watch?v=xpP39cZamlk&list=PLLXnGmOewaNXrAvW9xsrtNrYqUDocZ18Z&index=5),
+- [06: naviguer](https://www.youtube.com/watch?v=f4GE63hibKc&list=PLLXnGmOewaNXrAvW9xsrtNrYqUDocZ18Z&index=6),
+- [07: annoter les propriétés de chaque mention](https://www.youtube.com/watch?v=pT-ICzuQAAo&list=PLLXnGmOewaNXrAvW9xsrtNrYqUDocZ18Z&index=7),
+- [08: rechercher](https://www.youtube.com/watch?v=-tFTjhFFS5o&list=PLLXnGmOewaNXrAvW9xsrtNrYqUDocZ18Z&index=8),
+- [09 configurer](https://www.youtube.com/watch?v=lEsM8F-IK8M&list=PLLXnGmOewaNXrAvW9xsrtNrYqUDocZ18Z&index=9),
+- [10: récapitulatif](https://www.youtube.com/watch?v=H62pm0Zyh7M&list=PLLXnGmOewaNXrAvW9xsrtNrYqUDocZ18Z&index=10),
+- [11: comment afficher la popup bloquée par Firefox?](https://www.youtube.com/watch?v=rp_f0LPr-dg&list=PLLXnGmOewaNXrAvW9xsrtNrYqUDocZ18Z&index=11)
+
+
 
 
 ## Source code and licence
