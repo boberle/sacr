@@ -132,31 +132,58 @@ class DataLoader {
       };
       li = document.createElement('LI');
       ul.appendChild(li);
-      t = document.createTextNode("use a text from Aesop: ");
+      t = document.createTextNode("use a sample text: ");
       li.appendChild(t);
-      input = document.createElement('INPUT');
-      li.appendChild(input);
-      input.type = 'button';
-      input.value = "with annotations";
-      input.onclick = function() {
-         textareaText.value = DataLoader.getSampleTextWithAnnotations();
+
+      var select = document.createElement('SELECT');
+      var lst = new Array(
+         "Please choose...",
+         "en: Aesop (no annotation)",        // 1
+         "en: Aesop (with annotations)",     // 2
+         "en: Caesar (no annotation)",       // 3
+         "en: Caesar (with annotations)",    // 4
+         "en: Cicero (no annotation)",       // 5
+         "en: Cicero (with annotations)",    // 6
+         "en: Pliny (no annotation)",        // 7
+         "en: Pliny (with annotations)",     // 8
+         "fr: Esope (no annotation)",        // 9
+         "fr: Esope (with annotations)",     // 10
+         "fr: César (no annotation)",        // 11
+         "fr: César (with annotations)",     // 12
+         "fr: Cicéron (no annotation)",      // 13
+         "fr: Cicéron (with annotations)",   // 14
+         "fr: Pline (no annotation)",        // 15
+         "fr: Pline (with annotations)",     // 16
+      );
+      for (var o of lst) {
+         var opt = document.createElement('OPTION');
+         opt.text = o;
+         select.appendChild(opt);
       }
-      if (go == 'withAnnotations') {
-         textareaText.value = DataLoader.getSampleTextWithAnnotations();
-      }
-      t = document.createTextNode(" or ");
-      li.appendChild(t);
-      input = document.createElement('INPUT');
-      li.appendChild(input);
-      input.type = 'button';
-      input.value = "without annotation";
-      input.onclick = function() {
-         textareaText.value = DataLoader.getSampleTextWithoutAnnotations();
-      }
-      if (go == 'withoutAnnotations') {
-         textareaText.value = DataLoader.getSampleTextWithoutAnnotations();
+      li.appendChild(select);
+      select.onchange = function() {
+         var i = this.selectedIndex;
+         switch (i) {
+            case 1: textareaText.value = AESOP_EN_RAW; break;
+            case 2: textareaText.value = AESOP_EN_ANNOT; break;
+            case 3: textareaText.value = CAESAR_EN_RAW; break;
+            case 4: textareaText.value = CAESAR_EN_ANNOT; break;
+            case 5: textareaText.value = CICERO_EN_RAW; break;
+            case 6: textareaText.value = CICERO_EN_ANNOT; break;
+            case 7: textareaText.value = PLINY_EN_RAW; break;
+            case 8: textareaText.value = PLINY_EN_ANNOT; break;
+            case 9: textareaText.value = AESOP_FR_RAW; break;
+            case 10: textareaText.value = AESOP_FR_ANNOT; break;
+            case 11: textareaText.value = CAESAR_FR_RAW; break;
+            case 12: textareaText.value = CAESAR_FR_ANNOT; break;
+            case 13: textareaText.value = CICERO_FR_RAW; break;
+            case 14: textareaText.value = CICERO_FR_ANNOT; break;
+            case 15: textareaText.value = PLINY_FR_RAW; break;
+            case 16: textareaText.value = PLINY_FR_ANNOT; break;
+         }
       }
       div.appendChild(textareaText);
+
       // properties
       var textareaProperties = document.createElement('TEXTAREA');
       textareaProperties.cols = 90;
@@ -182,17 +209,27 @@ class DataLoader {
       };
       li = document.createElement('LI');
       ul.appendChild(li);
-      t = document.createTextNode("use a ");
+      t = document.createTextNode("use a sample schema: ");
       li.appendChild(t);
-      input = document.createElement('INPUT');
-      li.appendChild(input);
-      input.type = 'button';
-      input.value = "default schema";
-      input.onclick = function() {
-         textareaProperties.value = DataLoader.getSampleSchema();
+
+      select = document.createElement('SELECT');
+      lst = new Array(
+         "Please choose...",
+         "English scheme",
+         "French scheme",
+      );
+      for (var o of lst) {
+         var opt = document.createElement('OPTION');
+         opt.text = o;
+         select.appendChild(opt);
       }
-      if (go == 'withAnnotations') {
-         textareaProperties.value = DataLoader.getSampleSchema();
+      li.appendChild(select);
+      select.onchange = function() {
+         var i = this.selectedIndex;
+         switch (i) {
+            case 1: textareaProperties.value = SCHEME_EN; break;
+            case 2: textareaProperties.value = SCHEME_FR; break;
+         }
       }
       div.appendChild(textareaProperties);
       // number of link

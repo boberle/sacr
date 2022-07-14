@@ -48,10 +48,15 @@ class Text {
                that.tokenizationType, false);
             parser.parseText();
          } catch(error) {
-            var errText = "<p>"+error.name+": "+error.message+"</p>";
-            if (error.fileName) errText += "<p>File: "+error.fileName+"</p>";
-            if (error.lineNumber) errText += "<p>Line number: "+error.lineNumber+"</p>";
-            if (error.stack) errText += "<p>Stack: "+error.stack+"</p>";
+            var errText;
+            if (typeof(error) == "string") {
+               errText = error;
+            } else {
+               errText = "<p>"+error.name+": "+error.message+"</p>";
+               if (error.fileName) errText += "<p>File: "+error.fileName+"</p>";
+               if (error.lineNumber) errText += "<p>Line number: "+error.lineNumber+"</p>";
+               if (error.stack) errText += "<p>Stack: "+error.stack+"</p>";
+           }
             that.div.innerHTML = "<p>An error occured:</p>" + errText;
             return;
          }

@@ -110,7 +110,7 @@ class Schema {
          }
          var prop = new LinkProperty(name, initialValue);
          if ('newline' in setup)
-            prop.newLineAfter = (setup['newline'] == 'true');
+            prop.newLineBefore = (setup['newline'] == 'true');
          if ('showname' in setup)
             prop.showName = (setup['showname'] == 'true');
          if ('textboxsize' in setup)
@@ -157,6 +157,11 @@ class LinkProperties {
       this.properties = properties;
       this.div = document.createElement('DIV');
       for (var property of properties) {
+         if (property.newLineBefore) {
+            this.div.appendChild(document.createElement("BR"));
+         } else {
+            this.div.appendChild(document.createTextNode(" "));
+         }
          if (property.showName) {
             this.div.appendChild(document.createTextNode(property.name+": "));
          }
@@ -236,7 +241,7 @@ class LinkProperty {
       this.initialValue = initialValue;
       this.showName = false; //
       this.type = 'normal'; // normal, head, label (= a textbox), text, ref
-      this.newLineAfter = false;
+      this.newLineBefore = false;
       this.values = []; // an array of possible values (for combo)
       this.addShortcuts = false;
       this.textboxSize = 7;
