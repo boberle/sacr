@@ -188,6 +188,79 @@ class Exporter {
       return result;
    }
 
+   convertElementToHTMLText(element, brackets, indices) {
+      var result = '';
+      for (var e of element.childNodes) {
+         if (e.nodeType == 3) { // text
+            result += e.textContent;
+         } else if (e.nodeType == 1) { // DOM element
+            if (e.tagName == 'SPAN') {
+               if (e.classList.contains(CLASS_PAR_NUMBER)) {
+                  // nothing
+               } else if (e.classList.contains(CLASS_METADATA)) {
+                  // nothing
+               } else if (e.classList.contains(CLASS_LINK)) {
+                  const chain = gText.chainColl.getChainByLinkSpan(e);
+                  if (!chain) {
+                     alert("One of the link span is not in the dictionary");
+                  } else {
+                     let index = "";
+                     if (chain.isTrueChain) {
+                        if (!(chain.name in indices)) {
+                           indices[chain.name] = Object.keys(indices).length ? Math.max(...Object.values(indices)) + 1 : 1;
+                        }
+                        index = `<sub>${indices[chain.name]}</sub>`;
+                     }
+                     if (brackets) {
+                        const style = `font-weight: bold; font-size: 130%; color: ${chain.color.string}`;
+                        result += `<span style="${style}">[</span>${this.convertElementToHTMLText(e, brackets, indices)}<span style="${style}">]${index}</span>`;
+                     } else {
+                        result += `<span class="link" style="border: ${chain.color.string} 2pt solid;"><span style="background-color: ${chain.color.string};">${chain.name}</span> ${this.convertElementToHTMLText(e, brackets, indices)}</span>`;
+                     }
+                  }
+               } else {
+                  alert("Found a 'span' which is neither a link nor a metadata (className: '"+elements[i].className+"')...");
+               }
+            } else if (e.tagName == 'A') {
+               result += e.textContent;
+            } else if (e.tagName == 'BR') {
+               result += "</br>";
+            } else {
+               alert("Found a <"+e.tagName+">...");
+            }
+         } else {
+            alert("Found a element of node type: "+e.nodeType+"...");
+         }
+      }
+      return result;
+   }
+
+   convertDomToHTMLString(brackets) {
+      var result = '';
+      const indices = {};
+      for (var par of gText.div.childNodes) {
+         if (par.tagName == 'P') {
+            if (par.classList.contains(CLASS_PARAGRAPH)) {
+               result += `<p style="margin: 0; padding: 10px; ${brackets ? '' : 'line-height: 3.1em; padding-left: 0;'}">${this.convertElementToHTMLText(par, brackets, indices)}</p>\n`;
+            } else if (par.classList.contains(CLASS_COMMENT)) {
+               result += `<p style="font-family: mono; background-color: antiquewhite; padding: 10px; margin: 0px">${par.textContent}</p>\n`;
+            } else {
+               alert("Found a 'p' which is neither a text nor an info: `"+par.textContent+"'.");
+            }
+         } else {
+            alert("A child of the div 'text' is not a paragraph (node type: "+pars[i].nodeType+").");
+         }
+      }
+      return result;
+   }
+
+   computeHTML(brackets) {
+      var result = "<html><head><style>p > .link { padding: 11px; padding-left: 0; } p > .link > .link { padding: 8px; padding-left: 0; } p > .link > .link > .link { padding: 5px; padding-left: 0; } p > .link > .link > .link > .link { padding: 0; } p > .link > span { padding: 11px; } p > .link > .link > span { padding: 8px; } p > .link > .link > .link > span { padding: 5px; } p > .link > .link > .link > .link > span { padding: 0; }</style></head><body>";
+      result += this.convertDomToHTMLString(brackets);
+      result += "</body></html>";
+      return result;
+   }
+
    computeSchema() {
       return gText.raw_schema;
    }
@@ -195,6 +268,12 @@ class Exporter {
    exportText(complete) {
       var filename = Exporter.computeNewFilename(gText.textFilename);
       var text = this.computeText(complete);
+      Exporter.writeToFile(text, filename);
+   }
+
+   exportHTML(brackets=false) {
+      var filename = Exporter.computeNewFilename(gText.textFilename) + ".html";
+      var text = this.computeHTML(brackets);
       Exporter.writeToFile(text, filename);
    }
 

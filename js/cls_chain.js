@@ -202,6 +202,17 @@ class ChainCollection {
       return null;
    }
 
+   getChainByLinkSpan(span) {
+      for (var c of this.chains) {
+         for (var l of c.links) {
+            if (l.span == span) {
+               return c;
+            }
+         }
+      }
+      return null;
+   }
+
    transferLink(link, targetChain) {
       var sourceChain = this.getChainByLink(link);
       if (sourceChain === targetChain) {

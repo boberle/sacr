@@ -203,6 +203,12 @@ The source code can be found at boberle.com.
          } else {
             new Exporter().exportText();
          }
+      } else if (e.keyCode == 65) { // a = export html
+         if (e.shiftKey) {
+            new Exporter().exportHTML(true);
+         } else {
+            new Exporter().exportHTML();
+         }
       } else if (e.keyCode == 88) { // x = export schema
          if (e.shiftKey) {
             new Exporter().showSchema();
@@ -302,6 +308,8 @@ The source code can be found at boberle.com.
          help += "- w: write the text and annotations to a file\n";
          help += "- W: write the text and annotations to a file (with head ";
          help += "text and link content)\n";
+         help += "- a: write a HTML representation to a file\n";
+         help += "- A: write a HTML representation (with brackets) to a file\n";
          help += "- x: write the schema to a file\n";
          help += "- X: show the schema (in a dialog)\n";
          help += "\n";
