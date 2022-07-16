@@ -23,8 +23,8 @@
 %% POLYGLOSSIA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \usepackage{polyglossia}
-%\setmainlanguage{french}
-\setotherlanguage{english}
+\setmainlanguage{french}
+%\setotherlanguage{english}
 %\setotherlanguage{german}
 %\setotherlanguage{greek}
 %\setotherlanguage{latin}
@@ -33,7 +33,7 @@
    strict,
    english=american,
    autostyle=true, % adapt for every \textLANGUAGE
-   %autostyle=once, % adapt only for main language
+   autostyle=once, % adapt only for main language
 ]{csquotes}
 
 % there is a bug: at the end of line, you may have a lonely «, and the rest of
@@ -509,7 +509,7 @@ Imagine you have loaded a file called \verb|esope|.  When you press the
 (where \verb|20170529_230130| is the date (year, month, day) and time (hours,
 minutes, seconds).
 
-If you save the some minutes later, you get, for example,
+If you save the text some minutes later, you get, for example,
 \verb|esope_20170529_230424| (the name ends with \verb|0424| instead of
 \verb|0130|).
 
@@ -519,6 +519,50 @@ on the data loader, you get a name like \verb|default_20170529_230130|.
 The next annotation session, you just load (using the "browse" button of the
 data loader) the last file you saved, for example
 \verb|esope_20170529_230424| or \verb|default_20170529_230130|.
+
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~       {{{1
+ \subsection{Exporting the annotations in HTML format}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Viewing the annotated text in the web browser requires several steps: opening
+the SACR web page, loading the text, loading the annotation schema and then
+parsing the annotations by clicking on the button.
+
+You can export the annotations directly as an HTML file that you can open
+directly in the browser (either by copying the path in the address bar or by
+double-clicking on the file icon).
+
+For that, press "a" (instead of "w" that you would use to save the annotated
+text in SACR format). You will be asked to save the file, or it will be
+automatically downloaded depending on your browser settings.  When you open
+the file, you will get the view you are accustomed to: see
+Fig~\ref{fig:html-export-1}.
+
+If you press "A", the exported html will look like
+Fig~\ref{fig:html-export-2}.
+
+\begin{figure}
+\begin{center}
+\fbox{\includegraphics[width=12cm]{imgs/export_html_1.png}}
+\end{center}
+\caption{Exporting in HTML format with "a".}
+\label{fig:html-export-1}
+\end{figure}
+
+
+\begin{figure}
+\begin{center}
+\fbox{\includegraphics[width=12cm]{imgs/export_html_2.png}}
+\end{center}
+\caption{Exporting in HTML format with "A".}
+\label{fig:html-export-2}
+\end{figure}
+
+When viewing the annotations in the way, you cannot modify them, and you see
+only the chains.
+
+
 
 %============================================                       {{{1
  \section{Creating and editing annotations}
