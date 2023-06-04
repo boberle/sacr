@@ -191,6 +191,8 @@ The source code can be found at boberle.com.
          }
       } else if (e.keyCode == 81) { // q
          //gText.clickOnTheParseButton();
+      } else if (e.keyCode === 90) { // z = insert zero token Ø
+         gText.insertZeroToken(e.shiftKey);
       } else if (e.keyCode == 69) { // e = expand/collapse all
          if (e.shiftKey) {
             gText.chainColl.collapseAllChainsInPopup();
@@ -312,6 +314,10 @@ The source code can be found at boberle.com.
          help += "- A: write a HTML representation (with brackets) to a file\n";
          help += "- x: write the schema to a file\n";
          help += "- X: show the schema (in a dialog)\n";
+         help += "\n";
+         help += "Insert zero token (Ø):\n";
+         help += "- z: insert Ø AFTER the currently selected token\n";
+         help += "- Z: insert Ø BEFORE the currently selected token\n";
          help += "\n";
          help += "Display:\n";
          help += "- i: increase font size\n";

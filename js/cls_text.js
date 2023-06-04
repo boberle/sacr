@@ -508,4 +508,25 @@ class Text {
       alert(msg);
    }
 
+   insertZeroToken(insertBefore = false) {
+      const selectedTokens = gText.getSelectedTokens();
+      if (selectedTokens.length !== 1) {
+         return;
+      }
+      const selectedToken = selectedTokens[0];
+      const newToken = gText.createTokenAnchor("Ø");
+      if (insertBefore) {
+         if (!confirm("You are about the insert a 'Ø' token BEFORE the current selected token. This can't be undone without editing the text file. Continue?")) {
+            return;
+         }
+         selectedToken.before(newToken, document.createTextNode(" "));
+      } else {
+         if (!confirm("You are about the insert a 'Ø' token AFTER the current selected token. This can't be undone without editing the text file. Continue?")) {
+            return;
+         }
+         selectedToken.after(document.createTextNode(" "), newToken);
+      }
+      gText.deselectAllTokensAndLinks();
+   }
+
 }
