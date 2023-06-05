@@ -42,7 +42,7 @@ The source code can be found at boberle.com.
 
 <script type="text/javascript">
 
-   const VERSION = "5.3.0";
+   const VERSION = "5.4.0";
    document.getElementById('title').innerHTML = "Coreference Chain Annotation Tool " +
       VERSION + " (<a href=\"user_guide.pdf\" target=\"_blank\">help</a>)";
 
@@ -126,7 +126,7 @@ The source code can be found at boberle.com.
       } else if (e.keyCode == 67) { // c
          gText.changeColorOfSelectedChain();
       } else if (e.keyCode == 66) { // b = backward in text
-         if (e.ctrlKey) {
+         if (e.ctrlKey || e.metaKey) {
             return;
          }
          if (e.shiftKey) {
@@ -135,7 +135,7 @@ The source code can be found at boberle.com.
             gText.selectNextLinkInText(true, false);
          }
       } else if (e.keyCode == 70) { // f = forward in text
-         if (e.ctrlKey) {
+         if (e.ctrlKey || e.metaKey) {
             return;
          }
          if (e.shiftKey) {
@@ -144,7 +144,7 @@ The source code can be found at boberle.com.
             gText.selectNextLinkInText(false, false);
          }
       } else if (e.keyCode == 74) { // j = forward in chain
-         if (e.ctrlKey) {
+         if (e.ctrlKey || e.metaKey) {
             return;
          }
          if (e.shiftKey) {
@@ -153,7 +153,7 @@ The source code can be found at boberle.com.
             gText.selectNextLinkInChain(false, false);
          }
       } else if (e.keyCode == 75) { // k = backward in chain
-         if (e.ctrlKey) {
+         if (e.ctrlKey || e.metaKey) {
             return;
          }
          if (e.shiftKey) {

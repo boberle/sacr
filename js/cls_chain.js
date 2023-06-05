@@ -409,7 +409,7 @@ class Chain {
       this.popupDivHeading.textContent = this._name;
       var that = this;
       this.popupDivHeading.onclick = function(e) {
-         if (e.ctrlKey) {
+         if (e.ctrlKey || e.metaKey) {
             that.firstLink.select();
          } else {
             if (that.popupLinkDiv.style.display == 'none') {

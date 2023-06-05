@@ -110,7 +110,7 @@ class Link {
    _addEvents() {
       var that = this;
       this.span.onclick = function(e) {
-         if (e.ctrlKey && e.shiftKey) { // attach to new chain (ask for name)
+         if ((e.ctrlKey || e.metaKey) && e.shiftKey) { // attach to new chain (ask for name)
             that.select();
             var name = CommonFunctions.getChainName(gText.chainColl, true,
                that.name);
@@ -119,7 +119,7 @@ class Link {
                gText.chainColl.addChain(chain);
                gText.chainColl.transferLink(that, chain);
             }
-         } else if (e.ctrlKey) { // attach to last selected chain
+         } else if (e.ctrlKey || e.metaKey) { // attach to last selected chain
             var lastSelectedChain = gText.chainColl.getLastSelectedChain();
             that.select();
             if (lastSelectedChain) {
@@ -177,7 +177,7 @@ class Link {
             var sourceChain = gText.chainColl.getChainByLink(sourceLink);
             var targetChain = gText.chainColl.getChainByLink(targetLink);
             if (sourceChain === targetChain) return;
-            var ctrlKey = e.ctrlKey // doesn't seem to work on FF 54 (only 55), and doesn't work on chromium
+            var ctrlKey = (e.ctrlKey || e.metaKey) // doesn't seem to work on FF 54 (only 55), and doesn't work on chromium
                || e.dataTransfer.dropEffect == "copy"; // works on all versions of FF, and on chromium if the key is pressed before beginning the d&d
             // for chrome, see: https://stackoverflow.com/questions/19010257/event-datatransfer-dropeffect-in-chrome
             //console.log(e.dataTransfer.dropEffect);

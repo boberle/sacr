@@ -93,10 +93,10 @@ class Text {
          } else if (dblClick || selected.length == 1) {
             obj.classList.add(CLASS_SELECTED);
             // shift: ask for a name
-            if (e.shiftKey && !e.ctrlKey) {
+            if (e.shiftKey && !e.ctrlKey && !e.metaKey) {
                that.createLinkAndChain(true);
             // ctrl: attach to previous chain
-            } else if (e.ctrlKey && !e.shiftKey) {
+            } else if ((e.ctrlKey || e.metaKey) && !e.shiftKey) {
                that.createLinkAndAttachItToLastSelectedChain();
             // otherwise, default name
             } else {
