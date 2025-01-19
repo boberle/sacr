@@ -56,6 +56,31 @@ Video tutorials (in French) are available on my [Youtube channel](https://www.yo
 - [11: comment afficher la popup bloquée par Firefox?](https://www.youtube.com/watch?v=rp_f0LPr-dg&list=PLLXnGmOewaNXrAvW9xsrtNrYqUDocZ18Z&index=11)
 
 
+## Convert all the annotation into a relational database
+
+Use the [coreference database project](https://github.com/boberle/coreference_databases) scripts to convert your work into a relational database, in the form of a series of CSV (Comma Separated Values) files, that you can use in a spreadsheet program like Microsoft Office or LibreOffice Calc, or in a specialized statistic program like R or Python's Pandas.
+
+This works for a single text or a whole corpus (several texts separately annotated with SACR).
+
+The table (CSV files) are:
+
+- `tokens`: all the tokens in the texts
+- `sentences`: all the sentences in the texts, with specific annotations (like the number of tokens, mentions, chains, etc.),
+- `paragraphs`: all the paragraphs in the texts, with specific annotations (like the number of tokens, mentions, chains, etc.),
+- `texts`: all the texts, with specific annotations (like the number of tokens, mentions, chains, etc.),
+- `chains`: all the chains in the texts, with specific annotations (like the number of mentions, etc.)
+- `mentions`: all the mentions in the texts, with specific annotations (like the name of the chain, the size of the chain, etc.)
+- `relations`: all the relations in the texts, with specific annotations (like the distance between two mentions). There are several types of relations:
+   - `first`: relations from the first mention to every other mentions in the chain (A-B, A-C, A-D...),
+   - `consecutive`: relations from a mention to the next mention in the chain (A-B, B-C, C-D...),
+   - `all`: both first and consecutive relations.
+
+
+## Conversion scripts to other formats
+
+### From and to other coreference formats
+
+See the [`corefconversion` project](https://github.com/boberle/corefconversion) to convert from and to Conll and other formats.
 
 
 ## Source code and licence
@@ -64,4 +89,8 @@ Source code may be found on [github](https://github.com/boberle/sacr) or [boberl
 
 The tool is distributed under the terms of the Mozilla Public License v2.  This program comes with ABSOLUTELY NO WARRANTY, see the LICENSE file for more details.
 
+
+## Contact
+
+Want to talk? Reach me at bruno@boberle.com.
 
